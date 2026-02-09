@@ -9,34 +9,48 @@ public:
 	Data() {
 	    dia = mes = ano = 1;
 	}
-	string getMesString() {
+	int getMesDias() {
 	    switch (mes) {
-	        case 1: return "Janeiro";
-	        case 2: return "Fevereiro";
-	        case 3: return "Marco";
-	        case 4: return "Abril";
-	        case 5: return "Maio";
-	        case 6: return "Junho";
-	        case 7: return "Julho";
-	        case 8: return "Agosto";
-	        case 9: return "Setembro";
-	        case 10: return "Outubro";
-	        case 11: return "Novembro";
-	        case 12: return "Dezembro";
+	        case 1: return 31;
+	        case 2: return 28;
+	        case 3: return 31;
+	        case 4: return 30;
+	        case 5: return 31;
+	        case 6: return 30;
+	        case 7: return 31;
+	        case 8: return 31;
+	        case 9: return 30;
+	        case 10: return 31;
+	        case 11: return 30;
+	        case 12: return 31;
 	    }
-	    return "Indefinido";
+	    return 31;
 	}
-	int getDia(){
-	    return dia;
+	string getDia(){
+		if (dia < 10) {
+		    return "0" + to_string(dia);
+		}
+		return to_string(dia);
 	}
 	void setDia(){
 	    cin >> dia;
 	}
-	int getMes(){
-	    return mes;
+	string getMes(){
+	    if (mes < 10) {
+	        return "0" + to_string(mes);
+	    }
+	    return to_string(mes);
 	}
 	void setMes(){
 	    cin >> mes;
+		if (mes < 1 || mes > 12) {
+			cout << "Atributo mês Inválido" << endl;
+			mes = 1;
+		}
+		else if (dia < 1 || dia > getMesDias()) {
+			cout << "Atributo dia Inválido" << endl;
+			dia = 1;
+		}
 	}
 	int getAno(){
 	    return ano;
@@ -44,27 +58,32 @@ public:
 	void setAno(){
 	    cin >> ano;
 	}
-    void Dat(int d, int m, int a){
-        dia = d;
-        mes = m;
-        ano = a;
-        if (mes < 1 || mes > 12) {
-            cout << "Atributo Inválido." << endl;
-        }
-        else if (mes == 2 && d > 28) {
-            cout << "Atributo Inválido." << endl;
-        }
-        else if (mes % 2 == 0 && d > 30) {
-            cout << "Atributo Inválido." << endl;
-        }
-        else if (mes % 2 != 0 && d > 31) {
-            cout << "Atributo Inválido." << endl;
-        }
-    }
+	void Dat(int d, int m, int a){
+		dia = d;
+		mes = m;
+		ano = a;
+		if (mes < 1 || mes > 12) {
+			cout << "Atributo mês Inválido" << endl;
+			mes = 1;
+		}
+		else if (dia < 1 || dia > getMesDias()) {
+			cout << "Atributo dia Inválido" << endl;
+		}
+	}
 	void PrintData(){
-	    string nomedomes;
-	    nomedomes = getMesString();
-	    std::cout << dia << " de " << nomedomes << " de " << ano << std::endl;
+		std::cout << getDia() << "/" << getMes() << "/" << ano << std::endl;
+	}
+	void avancarDia(){
+	    dia++;
+
+	    if (dia > getMesDias()) {
+	        dia = 1;
+	        mes++;
+	    }
+	    if (mes > 12) {
+	        mes = 1;
+	        ano++;
+		}
 	}
 };
 
@@ -73,10 +92,15 @@ public:
 
 int main()
 {   
+	int dias;
     Data data;
     data.setDia();
     data.setMes();
     data.setAno();
+	cin >> dias;
+	for (int i = 0; i < dias; i++) {
+	    data.avancarDia();
+	}
     data.PrintData();
 	return 0;
 }
