@@ -10,7 +10,6 @@ int main() {
     string n;
     float s;
 
-    cin >> 
     
 
 }
