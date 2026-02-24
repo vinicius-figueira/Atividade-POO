@@ -1,0 +1,10 @@
+Sabão
+5
+Xampu
+15
+Arroz
+10
+Feijão
+9
+Pão
+5
